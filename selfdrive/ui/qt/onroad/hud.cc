@@ -9,9 +9,19 @@ constexpr int SET_SPEED_NA = 255;
 
 static QColor interpColor(float x, const std::vector<float> &x_vals, const std::vector<QColor> &colors) {
   assert(x_vals.size() == colors.size() && x_vals.size() >= 2);
+
+  // If x is less than first value, return first color
+  if (x <= x_vals[0]) return colors[0];
+
+  // If x is greater than last value, return last color
+  if (x >= x_vals.back()) return colors.back();
+
   for (size_t i = 1; i < x_vals.size(); ++i) {
     if (x < x_vals[i]) {
       float t = (x - x_vals[i - 1]) / (x_vals[i] - x_vals[i - 1]);
+      // Clamp t between 0 and 1
+      t = std::max(0.0f, std::min(1.0f, t));
+
       QColor c1 = colors[i - 1];
       QColor c2 = colors[i];
       return QColor::fromRgbF(
