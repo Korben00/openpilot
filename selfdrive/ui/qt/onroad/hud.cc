@@ -172,7 +172,7 @@ void HudRenderer::drawSetSpeed(QPainter &p, const QRect &surface_rect) {
       max_color = QColor(0x80, 0xd8, 0xa6, 0xff);
 
       // Speed limit color interpolation
-      float comparison_speed = slc_speed_limit;
+      float comparison_speed = slc_speed_limit + slc_speed_offset;
       if (comparison_speed > 0 && set_speed > comparison_speed) {
         auto interp_color = [=](QColor c1, QColor c2, QColor c3) {
           return interpColor(set_speed, {comparison_speed + 5, comparison_speed + 15, comparison_speed + 25}, {c1, c2, c3});
